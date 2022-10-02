@@ -6,13 +6,13 @@
 /*   By: marlou <marlou@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/29 20:06:38 by marlou        #+#    #+#                 */
-/*   Updated: 2022/09/20 17:17:32 by mkootstr      ########   odam.nl         */
+/*   Updated: 2022/10/02 17:51:49 by mkootstr      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include <limits.h>
-#include <stdlib.h>
+#include "utils.h"
 
 void	fatal(void)
 {

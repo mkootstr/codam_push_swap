@@ -6,10 +6,29 @@
 /*   By: mkootstr <mkootstr@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/15 12:56:37 by mkootstr      #+#    #+#                 */
-/*   Updated: 2022/09/20 19:10:01 by mkootstr      ########   odam.nl         */
+/*   Updated: 2022/10/02 18:54:42 by mkootstr      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
+//medians vinden met treesort?-------------------------------------------------------------------
+
+//checken voor duplicates------------------------------------------------------------------------
+
+//linked list ff maken en testen-----------------------------------------------------------------
+
+//stackb initiaten-------------------------------------------------------------------------------
+
+//alle instructions schrijven--------------------------------------------------------------------
+
+//sorting algorithm uitzoeken--------------------------------------------------------------------
+
+//misschien nog zoeken naar langste reeks opeenvolgende getallen---------------------------------
+
+//freeinput schrijven----------------------------------------------------------------------------
+
+//uitvinden of struct in utils.h en push_swap.h conflicting types worden-------------------------
+
+//unlink functie schrijven met return type *t_stack----------------------------------------------
 #include <unistd.h>
 #include <stdlib.h>
 
@@ -26,6 +45,8 @@ typedef struct	s_data
 	struct s_stack	*headb;
 	int				sizea;
 	int				sizeb;
+	struct s_stack	*lowmed;
+	struct s_stack	*highmed;
 }				t_data;
 
 int	main(int argc, char *argv[])
@@ -41,15 +62,6 @@ int	main(int argc, char *argv[])
 	return (0);
 }
 
-//checken voor duplicates------------------------------------------------------------------------
-//linked list ff maken en testen------------------------------------------------------------------------
-//alle lst functies schrijven---------------------------------------------------------------------
-//stackb initiaten------------------------------------------------------------------------
-//alle instructions schrijven------------------------------------------------------------------------
-//sorting algorithm uitzoeken------------------------------------------------------------------------
-//misschien nog zoeken naar langste reeks opeenvolgende getallen------------------------------------
-//freeinput schrijven----------------------------------------------------------------------
-//freeall schrijven------------------------------------------------------------------------------
 char	**parselist(int argc, char *argv[])
 {
 	char	**list;
@@ -141,9 +153,7 @@ t_stack	*initstack(char **input)
 	{
 		num = ft_atoi_check(input[i]);
 		if (i = 0)
-		{
 			stack = ft_lstnew(num);
-		}
 		else
 		{
 			next = ft_lstnew(num);
@@ -162,13 +172,24 @@ void	sort(t_stack *stacka)
 
 	data = (t_data *)malloc(sizeof(t_data));
 	data->sizea = ft_lstsize(&stacka);
-	if (data->sizea > ???)
+	if (data->sizea > 25)
+//kijken wanneer bigsort wanneer smallsort
 		bigsort(data, stacka);
 	else
 		smallsort(data, stacka);
 	freeall(data, stacka, stackb);
 }
 //wat de fuck zijn pointers met linked lists
+
+void	freeall(t_data *data, t_stack *stacka, t_stack *stackb)
+{
+	if (stacka)
+		ft_lstclear(stacka);
+	if (stackb)
+		ft_lstclear(stackb);
+	if (data)
+		free(data);
+}
 
 void	smallsort()
 {
@@ -180,24 +201,32 @@ void	bigsort()
 
 }
 
-
-
 //OPERATIONS===================================================================================
 
-void	swap()
+void	swap(t_stack *stack)
 {
-
+	int	temp;
+	
+	temp = 0;
+	if (stack && stack->next)
+	{
+		temp = stack->next->num;
+		stack->next->num = stack->num;
+		stack->num = temp;
+	}
 }
 
-void	ss()
+void	ss(t_stack *stacka, t_stack *stackb)
 {
-	swap(a);
-	swap(b);
+	swap(stacka);
+	swap(stackb);
 }
 
-void	push()
+void	push(t_stack *src, t_stack *dest)
 {
-
+//unlink functie nodig voor lists---------------------------------------------------------------
+	if (src)
+		ft_lstadd_front(&dest, src);
 }
 
 void	rotate()

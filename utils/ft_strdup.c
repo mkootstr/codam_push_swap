@@ -6,11 +6,11 @@
 /*   By: marlou <marlou@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/06 13:21:18 by marlou        #+#    #+#                 */
-/*   Updated: 2022/09/20 16:33:04 by mkootstr      ########   odam.nl         */
+/*   Updated: 2022/10/02 17:51:32 by mkootstr      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
+#include "utils.h"
 
 char			*ft_strdup(const char *src)
 {

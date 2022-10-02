@@ -1,24 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_lstadd_front.c                                  :+:    :+:            */
+/*   push_swap.h                                        :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: mkootstr <mkootstr@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/09/20 18:28:06 by mkootstr      #+#    #+#                 */
-/*   Updated: 2022/10/02 17:17:00 by mkootstr      ########   odam.nl         */
+/*   Created: 2022/09/15 13:03:26 by mkootstr      #+#    #+#                 */
+/*   Updated: 2022/10/02 16:42:50 by mkootstr      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "utils.h"
+#ifndef PUSH_SWAP_H
+# define PUSH_SWAP_H
+# include "../utils/utils.h"
 
-void	ft_lstadd_front(t_stack **lst, t_stack *new)
+typedef struct s_stack
 {
-	if (lst && lst[0] && new)
-	{
-		new->next = lst[0];
-		new->prev = NULL;
-		lst[0]->prev = new;
-		lst[0] = new;
-	}
-}
+	int				num;
+	struct s_stack	*next;
+	struct s_stack	*prev;
+}				t_stack;
+
+typedef struct s_data
+{
+	struct s_stack	*heada;
+	struct s_stack	*headb;
+	int				sizea;
+	int				sizeb;
+}				t_data;
+
+#endif
