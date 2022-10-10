@@ -6,52 +6,35 @@
 /*   By: mkootstr <mkootstr@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/15 12:56:37 by mkootstr      #+#    #+#                 */
-/*   Updated: 2022/10/02 18:54:42 by mkootstr      ########   odam.nl         */
+/*   Updated: 2022/10/10 15:46:55 by mkootstr      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
-
-//medians vinden met treesort?-------------------------------------------------------------------
-
-//checken voor duplicates------------------------------------------------------------------------
-
-//linked list ff maken en testen-----------------------------------------------------------------
 
 //stackb initiaten-------------------------------------------------------------------------------
 
 //alle instructions schrijven--------------------------------------------------------------------
 
-//sorting algorithm uitzoeken--------------------------------------------------------------------
-
 //misschien nog zoeken naar langste reeks opeenvolgende getallen---------------------------------
 
-//freeinput schrijven----------------------------------------------------------------------------
-
-//uitvinden of struct in utils.h en push_swap.h conflicting types worden-------------------------
-
 //unlink functie schrijven met return type *t_stack----------------------------------------------
+//check of ie eerste of laatste staat en dan unlink
+
+//freedata dubbelchecken-------------------------------------------------------------------------
+
+//printfunctie-----------------------------------------------------------------------------------
+
+//getallen met 000 ervoor------------------------------------------------------------------------
+
 #include <unistd.h>
 #include <stdlib.h>
-
-typedef struct	s_stack
-{
-	int				num;
-	struct s_stack	*next;
-	struct s_stack	*prev;
-}				t_stack;
-
-typedef struct	s_data
-{
-	struct s_stack	*heada;
-	struct s_stack	*headb;
-	int				sizea;
-	int				sizeb;
-	struct s_stack	*lowmed;
-	struct s_stack	*highmed;
-}				t_data;
+#include <stdio.h>
+#include "push_swap.h"
 
 int	main(int argc, char *argv[])
 {
 	char	**input;
+
+	input = NULL;
 	if (argc > 1)
 	{
 		input = parselist(argc, argv);
@@ -71,7 +54,7 @@ char	**parselist(int argc, char *argv[])
 	if (argc == 2)
 	{
 		list = ft_split(argv[1], ' ');
-		while (list && list[i] != NULL && checkint(list[i] == 1))
+		while (list && list[i] != NULL && checkint(list[i]) == 1)
 			i++;
 		if (!list || list[i] != NULL)
 			fatal();
@@ -81,7 +64,10 @@ char	**parselist(int argc, char *argv[])
 	if (list)
 		return (list);
 	else
+	{
 		fatal();
+		return (NULL);
+	}
 }
 
 char **longinput(int argc, char *argv[])
@@ -94,8 +80,8 @@ char **longinput(int argc, char *argv[])
 	i = 1;
 	j = 0;
 	list = malloc(argc * sizeof(char *));
-	list[argc] == NULL;
-	while (checkint(argv[i]) == 1 && i < argc)
+	list[argc - 1] = NULL;
+	while (i < argc && checkint(argv[i]) == 1)
 	{
 		list[j] = ft_strdup(argv[i]);
 		if (list[j] == NULL)
@@ -103,7 +89,7 @@ char **longinput(int argc, char *argv[])
 		i++;
 		j++;
 	}
-	if (checkint(argv[i]) == 0)
+	if (i < argc && checkint(argv[i]) == 0)
 		fatal();
 	return (list);
 }
@@ -113,13 +99,15 @@ int	checkint(char *str)
 	int	i;
 
 	i = 0;
+	if (!str)
+		return (0);
 	if (str[0] == '-'|| (str[0] >= '0' && str[0] <= '9'))
 	{
 		i++;
 		while (str[i] >= '0' && str[i] <= '9' && str[i] != '\0')
 			i++;
 	}
-	if (str[i] == '\0' && i < 12)
+	if (str && str[i] == '\0' && i < 12)
 		return (1);
 	else
 		return (0);
@@ -137,6 +125,7 @@ void	push_swap(char **input)
 
 	stack = initstack(input);
 	sort(stack);
+	//teststack(stack);
 }
 
 t_stack	*initstack(char **input)
@@ -149,10 +138,10 @@ t_stack	*initstack(char **input)
 	stack = NULL;
 	num = 0;
 	i = 0;
-	while (stack && input && input[i] != NULL)
+	while (input && input[i] != NULL)
 	{
 		num = ft_atoi_check(input[i]);
-		if (i = 0)
+		if (i == 0)
 			stack = ft_lstnew(num);
 		else
 		{
@@ -165,21 +154,88 @@ t_stack	*initstack(char **input)
 	return (stack);
 }
 
+void	freeinput(char **input)
+{
+	int	i;
+
+	i = 0;
+	while (input && input[i])
+	{
+		free(input[i]);
+		i++;
+	}
+	if (input)
+		free(input);
+}
+
+//void	teststack(t_stack *stack)
+//{
+//	while (stack->next != NULL)
+//	{
+//		printf("%d\n", stack->num);
+//		stack = stack->next;
+//	}
+//	printf("end\n");
+//}
+
 void	sort(t_stack *stacka)
 {
 	t_data	*data;
 	t_stack	*stackb;
 
+	stackb = NULL;
 	data = (t_data *)malloc(sizeof(t_data));
-	data->sizea = ft_lstsize(&stacka);
-	if (data->sizea > 25)
-//kijken wanneer bigsort wanneer smallsort
-		bigsort(data, stacka);
-	else
-		smallsort(data, stacka);
-	freeall(data, stacka, stackb);
+	data->sizea = ft_lstsize(stacka);
+	ft_index(stacka, data);
+	//while (data->sizea > 7)
+	//{
+	//	data->sizea = ft_lstsize(stacka);
+	findmedians(data, data->sizea);
+	//	//bigsort(stacka, data);
+	//}
+	//if (data->sizea <= 7)
+	//{
+	//	return ;
+	//	//smallsort(stacka, data);
+	//}
+}//
+
+void	ft_index(t_stack *stack, t_data *data)
+{
+	int	i;
+	t_stack	*first;
+	t_stack	*min;
+	
+	i = 0;
+	min = stack;
+	first = stack;
+	while (i < data->sizea)
+	{
+		while (stack && stack->next != NULL)
+		{
+			if (stack->next->num < min->num && stack->next->index == -1)
+				min = stack->next;
+			if (min->num == stack->next->num && min != stack->next)
+				ft_double(stack, data);
+			stack = stack->next;
+		}
+		min->index = i;
+		printf("stackindex :%d\n", min->index);
+		printf("stacknum :%d\n\n", min->num);
+		i++;
+		stack = first;
+		while (stack->index > -1 && stack->next != NULL)
+			stack = stack->next;
+		min = stack;
+	}
 }
-//wat de fuck zijn pointers met linked lists
+
+void	ft_double(t_stack *stack, t_data *data)
+{
+	freeall(data, stack, NULL);
+	ft_putstr_fd("ERROR\n", 2);
+	exit(1);
+}
 
 void	freeall(t_data *data, t_stack *stacka, t_stack *stackb)
 {
@@ -191,62 +247,72 @@ void	freeall(t_data *data, t_stack *stacka, t_stack *stackb)
 		free(data);
 }
 
-void	smallsort()
+void	findmedians(t_data *data, int size)
 {
+	int	high;
 
+	high = size - 1;
+	data->lmed = high / 3;
+	data->rmed = high * 2 / 3;
 }
 
-void	bigsort()
-{
-
-}
-
+//
+//void	smallsort()
+//{
+//
+//}
+//
+//void	bigsort()
+//{
+//
+//}
+//
 //OPERATIONS===================================================================================
 
-void	swap(t_stack *stack)
-{
-	int	temp;
-	
-	temp = 0;
-	if (stack && stack->next)
-	{
-		temp = stack->next->num;
-		stack->next->num = stack->num;
-		stack->num = temp;
-	}
-}
+//void	swap(t_stack *stack)
+//{
+//	int	temp;
+//	
+//	temp = 0;
+//	if (stack && stack->next)
+//	{
+//		temp = stack->next->num;
+//		stack->next->num = stack->num;
+//		stack->num = temp;
+//	}
+//}
 
-void	ss(t_stack *stacka, t_stack *stackb)
-{
-	swap(stacka);
-	swap(stackb);
-}
-
-void	push(t_stack *src, t_stack *dest)
-{
-//unlink functie nodig voor lists---------------------------------------------------------------
-	if (src)
-		ft_lstadd_front(&dest, src);
-}
-
-void	rotate()
-{
-
-}
-
-void	rr()
-{
-	rotate(a);
-	rotate(b);
-}
-
-void	revrot()
-{
-
-}
-
-void	rrr()
-{
-	revrot(a);
-	revrot(b);
-}
+//void	ss(t_stack *stacka, t_stack *stackb)
+//{
+//	swap(stacka);
+//	swap(stackb);
+//}
+//
+//void	push(t_stack *src, t_stack *dest)
+//{
+////unlink functie nodig voor lists---------------------------------------------------------------
+//	if (src)
+//		ft_lstadd_front(&dest, src);
+//}
+//
+//void	rotate()
+//{
+//
+//}
+//
+//void	rr()
+//{
+//	rotate(a);
+//	rotate(b);
+//}
+//
+//void	revrot()
+//{
+//
+//}
+//
+//void	rrr()
+//{
+//	revrot(a);
+//	revrot(b);
+//}

@@ -6,15 +6,15 @@
 /*   By: marlou <marlou@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/29 20:06:38 by marlou        #+#    #+#                 */
-/*   Updated: 2022/10/02 17:51:49 by mkootstr      ########   odam.nl         */
+/*   Updated: 2022/10/10 09:04:57 by mkootstr      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include <limits.h>
-#include "utils.h"
+#include "../src/push_swap.h"
 
-void	fatal(void)
+void	afatal(void)
 {
 	write(2, "ERROR\n", 6);
 	exit(1);
@@ -75,7 +75,7 @@ int	ft_atoi_check(char *str)
 		if (ft_num(str, i) != 0 && num >= INT_MIN && num <= INT_MAX)
 			return (num);
 		if (num > INT_MAX || num < INT_MIN)
-			fatal();
+			afatal();
 	}
 	return (0);
 }

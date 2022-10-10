@@ -6,11 +6,11 @@
 /*   By: marlou <marlou@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/06 13:21:18 by marlou        #+#    #+#                 */
-/*   Updated: 2022/10/02 17:51:32 by mkootstr      ########   odam.nl         */
+/*   Updated: 2022/10/10 08:45:29 by mkootstr      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "utils.h"
+#include "../src/push_swap.h"
 
 char			*ft_strdup(const char *src)
 {

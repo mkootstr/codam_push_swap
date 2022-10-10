@@ -1,28 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_lstnew.c                                        :+:    :+:            */
+/*   ft_putstr_fd.c                                     :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: mkootstr <mkootstr@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/09/20 18:28:29 by mkootstr      #+#    #+#                 */
-/*   Updated: 2022/10/10 09:32:53 by mkootstr      ########   odam.nl         */
+/*   Created: 2020/11/30 15:05:29 by mkootstr      #+#    #+#                 */
+/*   Updated: 2022/10/10 10:28:36 by mkootstr      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../src/push_swap.h"
 
-t_stack	*ft_lstnew(int content)
+void	ft_putstr_fd(char *s, int fd)
 {
-	t_stack	*node;
+	size_t	i;
 
-	node = (t_stack *)malloc(sizeof(t_stack));
-	if (node != NULL)
+	i = 0;
+	if (s)
 	{
-		node->num = content;
-		node->index = -1;
-		node->next = NULL;
-		node->prev = NULL;
+		while (s[i] != '\0')
+		{
+			write(fd, &s[i], 1);
+			i++;
+		}
 	}
-	return (node);
 }
