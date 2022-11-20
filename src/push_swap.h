@@ -6,7 +6,7 @@
 /*   By: mkootstr <mkootstr@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/15 13:03:26 by mkootstr      #+#    #+#                 */
-/*   Updated: 2022/10/10 11:31:26 by mkootstr      ########   odam.nl         */
+/*   Updated: 2022/11/20 15:07:02 by mkootstr      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,8 @@ typedef struct	s_data
 	struct s_stack	*heada;
 	struct s_stack	*headb;
 	int				sizea;
-	int				sizeb;
-	int				lmed;
-	int				rmed;
 }				t_data;
 
-int	main(int argc, char *argv[]);
 char	**parselist(int argc, char *argv[]);
 char **longinput(int argc, char *argv[]);
 int	checkint(char *str);
@@ -43,11 +39,15 @@ void	push_swap(char **input);
 t_stack	*initstack(char **input);
 //void	teststack(t_stack *stack);
 void	freeinput(char **input);
-void	sort(t_stack *stacka);
 void	ft_index(t_stack *stack, t_data *data);
 void	ft_double(t_stack *stack, t_data *data);
 void	freeall(t_data *data, t_stack *stacka, t_stack *stackb);
-void	findmedians(t_data *data, int size);
+
+void	sort(t_stack *stacka);
+void	radix(t_data *data);
+void	pushalla(t_data *data);
+int		issorted(t_data *data);
+int		zeropresent(t_data *data, int pos);
 
 int	ft_atoi_check(char *str);
 void	ft_lstadd_back(t_stack **lst, t_stack *new);
@@ -62,6 +62,23 @@ char			*ft_strdup(const char *src);
 size_t	ft_strlen(const char *str);
 void	ft_putstr_fd(char *s, int fd);
 
+t_stack	*unlink_node(t_stack *stack, t_data *data, int ab);
+void	swap(t_stack *stack);
+void	push(t_stack *src, t_stack *dest, t_data *data, int ab);
+void	revrot(t_stack *stack, t_data *data, int ab);
+void	rotate(t_stack *stack, t_data *data, int ab);
+
+void	sa(t_stack *stacka);
+void	sb(t_stack *stackb);
+void	ss(t_data *data);
+void	pa(t_data *data);
+void	pb(t_data *data);
+void	ra(t_data *data);
+void	rb(t_data *data);
+void	rr(t_data *data);
+void	rra(t_data *data);
+void	rrb(t_data *data);
+void	rrr(t_data *data);
 
 #endif
 

@@ -6,7 +6,7 @@
 /*   By: mkootstr <mkootstr@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/02 16:38:05 by mkootstr      #+#    #+#                 */
-/*   Updated: 2022/10/10 08:39:29 by mkootstr      ########   odam.nl         */
+/*   Updated: 2022/11/14 22:11:34 by mkootstr      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,12 @@
 # include "../src/push_swap.h"
 
 
-typedef struct	s_stack
-{
-	int				num;
-	struct s_stack	*next;
-	struct s_stack	*prev;
-}				t_stack;
+//typedef struct	s_stack
+//{
+//	int				num;
+//	struct s_stack	*next;
+//	struct s_stack	*prev;
+//}				t_stack;
 
 int	ft_atoi_check(char *str);
 void	ft_lstadd_back(t_stack **lst, t_stack *new);

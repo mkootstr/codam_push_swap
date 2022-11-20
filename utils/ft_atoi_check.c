@@ -6,12 +6,16 @@
 /*   By: marlou <marlou@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/29 20:06:38 by marlou        #+#    #+#                 */
-/*   Updated: 2022/10/10 09:04:57 by mkootstr      ########   odam.nl         */
+/*   Updated: 2022/11/05 21:52:22 by mkootstr      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
 #include <limits.h>
+/*
+**#include <unistd.h>
+**#include <stdio.h>
+**#include <stdlib.h>
+*/
 #include "../src/push_swap.h"
 
 void	afatal(void)
@@ -30,7 +34,7 @@ static long	ft_num(char *str, int x)
 	{
 		if (j == 0)
 			num = str[x] - 48;
-		else if (j <= 11 && num && str[x] <= '9' && str[x] >= '0')
+		else if (j <= 10 && num && str[x] <= '9' && str[x] >= '0')
 			num = num * 10 + (str[x] - 48);
 		x++;
 		j++;
@@ -38,7 +42,7 @@ static long	ft_num(char *str, int x)
 	if (j != 0)
 		return (num);
 	else
-		write(2, "ERROR\n", 6);
+		afatal();
 	return (0);
 }
 
@@ -48,8 +52,6 @@ static long	ft_minus(char *str, int a)
 
 	if (str[a] == 45)
 		x = -1;
-	else if (str[a] == 43)
-		x = 1;
 	else
 		x = 1;
 	return (x);
@@ -68,8 +70,11 @@ int	ft_atoi_check(char *str)
 		str[i] == '\r' || str[i] == '\t' || str[i] == '\v')
 			i++;
 		x = ft_minus(str, i);
-		if (str[i] == 43 || str[i] == 45)
+		if (str[i] == 45)
 			i++;
+		if ((str[i] == '0' && str[i + 1] != '\0') || (str[i] < '0' || \
+		str[i] > '9') || (str[i] == '0' && x == -1))
+			afatal();
 		num = ft_num(str, i);
 		num = x * num;
 		if (ft_num(str, i) != 0 && num >= INT_MIN && num <= INT_MAX)
@@ -79,3 +84,12 @@ int	ft_atoi_check(char *str)
 	}
 	return (0);
 }
+
+/*
+**int main(void)
+**{
+**	char *str = "-0";
+**	printf("%d\n", ft_atoi_check(str));
+**	return (0);
+**}
+*/

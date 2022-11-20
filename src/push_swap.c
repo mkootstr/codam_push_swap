@@ -6,24 +6,15 @@
 /*   By: mkootstr <mkootstr@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/15 12:56:37 by mkootstr      #+#    #+#                 */
-/*   Updated: 2022/10/10 15:46:55 by mkootstr      ########   odam.nl         */
+/*   Updated: 2022/11/20 21:13:12 by mkootstr      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-//stackb initiaten-------------------------------------------------------------------------------
-
-//alle instructions schrijven--------------------------------------------------------------------
-
 //misschien nog zoeken naar langste reeks opeenvolgende getallen---------------------------------
-
-//unlink functie schrijven met return type *t_stack----------------------------------------------
-//check of ie eerste of laatste staat en dan unlink
 
 //freedata dubbelchecken-------------------------------------------------------------------------
 
 //printfunctie-----------------------------------------------------------------------------------
-
-//getallen met 000 ervoor------------------------------------------------------------------------
 
 #include <unistd.h>
 #include <stdlib.h>
@@ -115,7 +106,7 @@ int	checkint(char *str)
 
 void	fatal(void)
 {
-	write(2, "ERROR\n", 6);
+	write(2, "Error\n", 6);
 	exit(1);
 }
 
@@ -168,6 +159,7 @@ void	freeinput(char **input)
 		free(input);
 }
 
+
 //void	teststack(t_stack *stack)
 //{
 //	while (stack->next != NULL)
@@ -181,24 +173,15 @@ void	freeinput(char **input)
 void	sort(t_stack *stacka)
 {
 	t_data	*data;
-	t_stack	*stackb;
-
-	stackb = NULL;
+	
 	data = (t_data *)malloc(sizeof(t_data));
+	data->heada = stacka;
+	data->headb = NULL;
 	data->sizea = ft_lstsize(stacka);
 	ft_index(stacka, data);
-	//while (data->sizea > 7)
-	//{
-	//	data->sizea = ft_lstsize(stacka);
-	findmedians(data, data->sizea);
-	//	//bigsort(stacka, data);
-	//}
-	//if (data->sizea <= 7)
-	//{
-	//	return ;
-	//	//smallsort(stacka, data);
-	//}
-}//
+	radix(data);
+	freeall(data, data->heada, data->headb);
+}
 
 void	ft_index(t_stack *stack, t_data *data)
 {
@@ -220,8 +203,8 @@ void	ft_index(t_stack *stack, t_data *data)
 			stack = stack->next;
 		}
 		min->index = i;
-		printf("stackindex :%d\n", min->index);
-		printf("stacknum :%d\n\n", min->num);
+//		printf("stackindex :%d\n", min->index);
+//		printf("stacknum :%d\n\n", min->num);
 		i++;
 		stack = first;
 		while (stack->index > -1 && stack->next != NULL)
@@ -233,7 +216,7 @@ void	ft_index(t_stack *stack, t_data *data)
 void	ft_double(t_stack *stack, t_data *data)
 {
 	freeall(data, stack, NULL);
-	ft_putstr_fd("ERROR\n", 2);
+	ft_putstr_fd("Error\n", 2);
 	exit(1);
 }
 
@@ -247,72 +230,261 @@ void	freeall(t_data *data, t_stack *stacka, t_stack *stackb)
 		free(data);
 }
 
-void	findmedians(t_data *data, int size)
-{
-	int	high;
+//void	findmedians(t_data *data, int size, int div)
+//{
+//	int	high;
+//
+//	high = size - 1;
+//	data->lmed = high / div;
+//	data->rmed = high * 2 / div;
+//}
 
-	high = size - 1;
-	data->lmed = high / 3;
-	data->rmed = high * 2 / 3;
+//RADIXSORT====================================================================================
+
+int	zeropresent(t_data *data, int pos)
+{
+	int	bit;
+	t_stack *node;
+
+	node = data->heada;
+	bit = 0;
+	while (node != NULL)
+	{
+		bit = (node->index & (1 << pos));
+		if (bit == 0)
+		{
+			printf("node = %d\n", node->index);
+			return (1);
+		}
+		printf("node = %d\n", node->index);
+		node = node->next;
+	}
+	printf("Null\n");
+	return (0);
 }
 
-//
-//void	smallsort()
-//{
-//
-//}
-//
-//void	bigsort()
-//{
-//
-//}
-//
+int	issorted(t_data *data)
+{
+	t_stack *node;
+
+	node = data->heada;
+	if (data->headb == NULL)
+	{
+		while (node->next != NULL)
+		{
+			if (node->index > node->next->index)
+				return (0);
+			node = node->next;
+		}
+		return (1);
+	}
+	else 
+		return (0);
+}
+
+void	pushalla(t_data *data)
+{
+	while (data->headb != NULL)
+		pa(data);
+}
+
+void	radix(t_data *data)
+{
+	int	bit;
+	int	pos;
+	int n;
+
+	bit = 0;
+	pos = 0;
+	n = 4;
+	while (issorted(data) == 0 && n > 0)
+	{
+		while (zeropresent(data, pos) == 1)
+		{
+			//printf("data->heada: %p\n", data->heada);
+			bit = (data->heada->index & (1 << pos));
+			if (bit == 0)
+				pb(data);
+			else
+				ra(data);
+		}
+		pushalla(data);
+		printf("1: %d, %d\n", data->heada->index, data->heada->num);
+		printf("2: %d, %d\n", data->heada->next->index, data->heada->next->num);
+		printf("3: %d, %d\n", data->heada->next->next->index, data->heada->next->next->num);
+		printf("4: %d, %d\n", data->heada->next->next->next->index, data->heada->next->next->next->num);
+		printf("5: %d, %d\n", data->heada->next->next->next->next->index, data->heada->next->next->next->next->num);
+		printf("6: %d, %d\n", data->heada->next->next->next->next->next->index, data->heada->next->next->next->next->next->num);
+		printf("7: %d, %d\n", data->heada->next->next->next->next->next->next->index, data->heada->next->next->next->next->next->next->num);
+		printf("8: %d, %d\n", data->heada->next->next->next->next->next->next->next->index, data->heada->next->next->next->next->next->next->next->num);
+		pos++;
+		n--;
+	}
+}
+
+
 //OPERATIONS===================================================================================
 
-//void	swap(t_stack *stack)
-//{
-//	int	temp;
-//	
-//	temp = 0;
-//	if (stack && stack->next)
-//	{
-//		temp = stack->next->num;
-//		stack->next->num = stack->num;
-//		stack->num = temp;
-//	}
-//}
+void	sa(t_stack *stacka)
+{
+	swap(stacka);
+	ft_putstr_fd("sa\n", 1);
+}
 
-//void	ss(t_stack *stacka, t_stack *stackb)
-//{
-//	swap(stacka);
-//	swap(stackb);
-//}
-//
-//void	push(t_stack *src, t_stack *dest)
-//{
-////unlink functie nodig voor lists---------------------------------------------------------------
-//	if (src)
-//		ft_lstadd_front(&dest, src);
-//}
-//
-//void	rotate()
-//{
-//
-//}
-//
-//void	rr()
-//{
-//	rotate(a);
-//	rotate(b);
-//}
-//
-//void	revrot()
-//{
-//
-//}
-//
-//void	rrr()
-//{
-//	revrot(a);
-//	revrot(b);
-//}
+void	sb(t_stack *stackb)
+{
+	swap(stackb);
+	ft_putstr_fd("sb\n", 1);
+}
+
+void	ss(t_data *data)
+{
+	swap(data->heada);
+	swap(data->headb);
+	ft_putstr_fd("ss\n",1);
+}
+
+void	pa(t_data *data)
+{
+	push(data->headb, data->heada, data, 'a');
+	ft_putstr_fd("pa\n", 1);
+}
+
+void	pb(t_data *data)
+{
+	push(data->heada, data->headb, data, 'b');
+	ft_putstr_fd("pb\n", 1);
+}
+
+void	ra(t_data *data)
+{
+	rotate(data->heada, data, 'a');
+	ft_putstr_fd("ra\n", 1);
+}
+
+void	rb(t_data *data)
+{
+	rotate(data->headb, data, 'b');
+	ft_putstr_fd("rb\n", 1);
+}
+
+void	rr(t_data *data)
+{
+	rotate(data->heada, data, 'a');
+	rotate(data->headb, data, 'b');
+	ft_putstr_fd("rr\n", 1);
+}
+
+void	rra(t_data *data)
+{
+	revrot(data->heada, data, 'a');
+	ft_putstr_fd("rra\n", 1);
+}
+
+void	rrb(t_data *data)
+{
+	revrot(data->headb, data, 'b');
+	ft_putstr_fd("rrb\n", 1);
+}
+
+void	rrr(t_data *data)
+{
+	revrot(data->heada, data, 'a');
+	revrot(data->headb, data, 'b');
+	ft_putstr_fd("rrr\n", 1);
+}
+
+t_stack	*unlink_node(t_stack *stack, t_data *data, int ab)
+{
+	if (stack)
+	{
+		if (stack->prev == NULL)
+		{
+			if (stack->next)
+                stack->next->prev = NULL;
+			if (ab == 'a' && data->heada)
+				data->heada = data->heada->next;
+			if (ab == 'b' && data->headb)
+				data->headb = data->headb->next;
+		}
+		if (stack->next == NULL && stack->prev)
+			stack->prev->next = NULL;
+		stack->prev = NULL;
+		stack->next = NULL;
+	}
+	return (stack);
+}
+
+void	swap(t_stack *stack)
+{
+	int	tempnum;
+	int tempindex;
+	
+	tempnum = 0;
+	tempindex = 0;
+	if (stack && stack->next)
+	{
+		tempnum = stack->next->num;
+		tempindex = stack->next->index;
+		stack->next->num = stack->num;
+		stack->next->index = stack->index;
+		stack->num = tempnum;
+		stack->index = tempindex;
+	}
+}
+
+void	push(t_stack *src, t_stack *dest, t_data *data, int ab)
+{
+	t_stack	*node;
+
+	node = NULL;
+	if (src)
+	{
+        if (ab == 'a')
+		    node = unlink_node(src, data, 'b');
+        else
+            node = unlink_node(src, data, 'a');
+        ft_lstadd_front(&dest, node);
+		if (ab == 'a')
+			data->heada = node;
+		if (ab == 'b')
+			data->headb = node;
+	}  
+}
+
+void	revrot(t_stack *stack, t_data *data, int ab)
+{
+	t_stack	*node;
+
+	node = NULL;
+	if (stack)
+	{
+		node = ft_lstlast(stack);
+		node = unlink_node(node, data, ab);
+		if (ab == 'a')
+        {
+			ft_lstadd_front(&data->heada, node);
+            data->heada = node;
+        }
+		if (ab == 'b')
+        {
+            ft_lstadd_front(&data->headb, node);
+            data->headb = node;
+        }
+	}
+}
+
+void	rotate(t_stack *stack, t_data *data, int ab)
+{
+	t_stack *node;
+
+	node = NULL;
+	if (stack)
+	{
+		node = unlink_node(stack, data, ab);
+		if (ab == 'a')
+			ft_lstadd_back(&data->heada, node);
+		if (ab == 'b')
+			ft_lstadd_back(&data->headb, node);
+	}
+}
