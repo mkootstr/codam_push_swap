@@ -6,7 +6,7 @@
 /*   By: mkootstr <mkootstr@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/15 13:03:26 by mkootstr      #+#    #+#                 */
-/*   Updated: 2022/11/20 15:07:02 by mkootstr      ########   odam.nl         */
+/*   Updated: 2022/11/25 17:42:48 by mkootstr      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ int	checkint(char *str);
 void	fatal(void);
 void	push_swap(char **input);
 t_stack	*initstack(char **input);
-//void	teststack(t_stack *stack);
 void	freeinput(char **input);
 void	ft_index(t_stack *stack, t_data *data);
 void	ft_double(t_stack *stack, t_data *data);
@@ -47,13 +46,17 @@ void	sort(t_stack *stacka);
 void	radix(t_data *data);
 void	pushalla(t_data *data);
 int		issorted(t_data *data);
-int		zeropresent(t_data *data, int pos);
 
-int	ft_atoi_check(char *str);
+void	sort_three(t_data *data);
+void	smallsort(t_data *data);
+void	sort_four(t_data *data);
+void	optimize(int size, int pos, t_data *data);
+void	sort_five(t_data *data);
+
+int		ft_atoi_check(char *str);
 void	ft_lstadd_back(t_stack **lst, t_stack *new);
 void	ft_lstadd_front(t_stack **lst, t_stack *new);
 void	ft_lstclear(t_stack *lst);
-void	ft_lstdelone(t_stack *lst);
 t_stack	*ft_lstlast(t_stack *lst);
 t_stack	*ft_lstnew(int content);
 int	ft_lstsize(t_stack *lst);

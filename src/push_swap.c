@@ -6,7 +6,7 @@
 /*   By: mkootstr <mkootstr@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/15 12:56:37 by mkootstr      #+#    #+#                 */
-/*   Updated: 2022/11/20 21:13:12 by mkootstr      ########   odam.nl         */
+/*   Updated: 2022/11/25 17:35:58 by mkootstr      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,6 @@ void	push_swap(char **input)
 
 	stack = initstack(input);
 	sort(stack);
-	//teststack(stack);
 }
 
 t_stack	*initstack(char **input)
@@ -159,17 +158,6 @@ void	freeinput(char **input)
 		free(input);
 }
 
-
-//void	teststack(t_stack *stack)
-//{
-//	while (stack->next != NULL)
-//	{
-//		printf("%d\n", stack->num);
-//		stack = stack->next;
-//	}
-//	printf("end\n");
-//}
-
 void	sort(t_stack *stacka)
 {
 	t_data	*data;
@@ -179,7 +167,10 @@ void	sort(t_stack *stacka)
 	data->headb = NULL;
 	data->sizea = ft_lstsize(stacka);
 	ft_index(stacka, data);
-	radix(data);
+	if (data->sizea > 5)
+		radix(data);
+	else
+		smallsort(data);
 	freeall(data, data->heada, data->headb);
 }
 
@@ -203,8 +194,6 @@ void	ft_index(t_stack *stack, t_data *data)
 			stack = stack->next;
 		}
 		min->index = i;
-//		printf("stackindex :%d\n", min->index);
-//		printf("stacknum :%d\n\n", min->num);
 		i++;
 		stack = first;
 		while (stack->index > -1 && stack->next != NULL)
@@ -230,56 +219,20 @@ void	freeall(t_data *data, t_stack *stacka, t_stack *stackb)
 		free(data);
 }
 
-//void	findmedians(t_data *data, int size, int div)
-//{
-//	int	high;
-//
-//	high = size - 1;
-//	data->lmed = high / div;
-//	data->rmed = high * 2 / div;
-//}
-
 //RADIXSORT====================================================================================
-
-int	zeropresent(t_data *data, int pos)
-{
-	int	bit;
-	t_stack *node;
-
-	node = data->heada;
-	bit = 0;
-	while (node != NULL)
-	{
-		bit = (node->index & (1 << pos));
-		if (bit == 0)
-		{
-			printf("node = %d\n", node->index);
-			return (1);
-		}
-		printf("node = %d\n", node->index);
-		node = node->next;
-	}
-	printf("Null\n");
-	return (0);
-}
 
 int	issorted(t_data *data)
 {
 	t_stack *node;
 
 	node = data->heada;
-	if (data->headb == NULL)
+	while (node->next != NULL)
 	{
-		while (node->next != NULL)
-		{
-			if (node->index > node->next->index)
-				return (0);
-			node = node->next;
-		}
-		return (1);
+		if (node->index > node->next->index)
+			return (0);
+		node = node->next;
 	}
-	else 
-		return (0);
+	return (1);
 }
 
 void	pushalla(t_data *data)
@@ -292,36 +245,151 @@ void	radix(t_data *data)
 {
 	int	bit;
 	int	pos;
-	int n;
+	int sizea;
+	int check;
 
 	bit = 0;
 	pos = 0;
-	n = 4;
-	while (issorted(data) == 0 && n > 0)
+	sizea = ft_lstsize(data->heada);
+	check = -1;
+	while (issorted(data) == 0)
 	{
-		while (zeropresent(data, pos) == 1)
+		while (data->heada && data->heada->index != check)
 		{
-			//printf("data->heada: %p\n", data->heada);
 			bit = (data->heada->index & (1 << pos));
 			if (bit == 0)
 				pb(data);
 			else
+			{
+				if (check == -1)
+					check = data->heada->index;
 				ra(data);
+			}
 		}
 		pushalla(data);
-		printf("1: %d, %d\n", data->heada->index, data->heada->num);
-		printf("2: %d, %d\n", data->heada->next->index, data->heada->next->num);
-		printf("3: %d, %d\n", data->heada->next->next->index, data->heada->next->next->num);
-		printf("4: %d, %d\n", data->heada->next->next->next->index, data->heada->next->next->next->num);
-		printf("5: %d, %d\n", data->heada->next->next->next->next->index, data->heada->next->next->next->next->num);
-		printf("6: %d, %d\n", data->heada->next->next->next->next->next->index, data->heada->next->next->next->next->next->num);
-		printf("7: %d, %d\n", data->heada->next->next->next->next->next->next->index, data->heada->next->next->next->next->next->next->num);
-		printf("8: %d, %d\n", data->heada->next->next->next->next->next->next->next->index, data->heada->next->next->next->next->next->next->next->num);
+		check = -1;
 		pos++;
-		n--;
 	}
 }
 
+//SMALLSORT====================================================================================
+
+void	smallsort(t_data *data)
+{
+	if (data->sizea == 1)
+		return ;
+	if (data->sizea == 2)
+		if (issorted(data) == 0)
+			sa(data->heada);
+	if (data->sizea == 3)
+		sort_three(data);
+	if (data->sizea == 4)
+		sort_four(data);
+	if (data->sizea == 5)
+		sort_five(data);
+}
+
+void	sort_three(t_data *data)
+{
+	t_stack *node1;
+	t_stack *node2;
+	t_stack *node3;
+
+	node1 = data->heada;
+	node2 = node1->next;
+	node3 = node2->next;
+	while (issorted(data) == 0)
+	{
+		if ((node1->index < node3->index && node1->index > node2->index) ||\
+		 (node3->index > node1->index && node3->index < node2->index) ||\
+		  (node2->index < node1->index && node2->index > node3->index))
+			sa(data->heada);
+		else if (node1->index > node2->index)
+			ra(data);
+		else
+			rra(data);
+	}
+}
+
+void	optimize(int size, int pos, t_data *data)
+{
+	if (pos < (size / 2))
+	{
+		while (pos > 0)
+		{
+			ra(data);
+			pos--;
+		}
+	}
+	else
+	{
+		while (pos < size)
+		{
+			rra(data);
+			pos++;
+		}
+	}
+}
+
+void	sort_four(t_data *data)
+{
+	t_stack *lowest;
+	t_stack *node;
+	int		pos;
+	int		i;
+
+	node = data->heada;
+	lowest = node;
+	pos = 0;
+	i = 0;
+	while (node != NULL)
+	{
+		if (node->index < lowest->index)
+		{
+			lowest = node;
+			pos = i;
+		}
+		node = node->next;
+		i++;
+	}
+	optimize(4, pos, data);
+	if (issorted(data) == 0)
+	{
+		pb(data);
+		sort_three(data);
+		pa(data);
+	}
+}
+
+void	sort_five(t_data *data)
+{
+	t_stack *lowest;
+	t_stack *node;
+	int		pos;
+	int		i;
+
+	node = data->heada;
+	lowest = node;
+	pos = 0;
+	i = 0;
+	while (node != NULL)
+	{
+		if (node->index < lowest->index)
+		{
+			lowest = node;
+			pos = i;
+		}
+		node = node->next;
+		i++;
+	}
+	optimize(5, pos, data);
+	if (issorted(data) == 0)
+	{
+		pb(data);
+		sort_four(data);
+		pa(data);
+	}
+}
 
 //OPERATIONS===================================================================================
 
