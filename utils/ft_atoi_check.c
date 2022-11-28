@@ -6,17 +6,12 @@
 /*   By: marlou <marlou@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/29 20:06:38 by marlou        #+#    #+#                 */
-/*   Updated: 2022/11/05 21:52:22 by mkootstr      ########   odam.nl         */
+/*   Updated: 2022/11/28 17:43:59 by mkootstr      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <limits.h>
-/*
-**#include <unistd.h>
-**#include <stdio.h>
-**#include <stdlib.h>
-*/
-#include "../src/push_swap.h"
+#include "../includes/functions.h"
 
 void	afatal(void)
 {
@@ -84,12 +79,3 @@ int	ft_atoi_check(char *str)
 	}
 	return (0);
 }
-
-/*
-**int main(void)
-**{
-**	char *str = "-0";
-**	printf("%d\n", ft_atoi_check(str));
-**	return (0);
-**}
-*/

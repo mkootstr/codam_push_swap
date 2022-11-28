@@ -1,32 +1,44 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_lstadd_back.c                                   :+:    :+:            */
+/*   printops1.c                                        :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: mkootstr <mkootstr@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/09/20 18:27:44 by mkootstr      #+#    #+#                 */
-/*   Updated: 2022/11/28 17:44:03 by mkootstr      ########   odam.nl         */
+/*   Created: 2022/11/28 16:38:50 by mkootstr      #+#    #+#                 */
+/*   Updated: 2022/11/28 17:59:55 by mkootstr      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/functions.h"
 
-void	ft_lstadd_back(t_stack **lst, t_stack *new)
+void	sa(t_stack *stacka)
 {
-	t_stack	*temp;
+	swap(stacka);
+	ft_putstr_fd("sa\n", 1);
+}
 
-	temp = ft_lstlast(*lst);
-	if (temp && lst && new)
-	{
-		temp->next = new;
-		new->prev = temp;
-		new->next = NULL;
-	}
-	else if (temp == NULL && lst && new)
-	{
-		*lst = new;
-		new->prev = NULL;
-		new->next = NULL;
-	}
+void	sb(t_stack *stackb)
+{
+	swap(stackb);
+	ft_putstr_fd("sb\n", 1);
+}
+
+void	ss(t_data *data)
+{
+	swap(data->heada);
+	swap(data->headb);
+	ft_putstr_fd("ss\n", 1);
+}
+
+void	pa(t_data *data)
+{
+	push(data->headb, data->heada, data, 'a');
+	ft_putstr_fd("pa\n", 1);
+}
+
+void	pb(t_data *data)
+{
+	push(data->heada, data->headb, data, 'b');
+	ft_putstr_fd("pb\n", 1);
 }

@@ -6,13 +6,13 @@
 /*   By: marlou <marlou@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/06 13:21:18 by marlou        #+#    #+#                 */
-/*   Updated: 2022/10/10 08:45:29 by mkootstr      ########   odam.nl         */
+/*   Updated: 2022/11/28 17:43:15 by mkootstr      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../src/push_swap.h"
+#include "../includes/functions.h"
 
-char			*ft_strdup(const char *src)
+char	*ft_strdup(const char *src)
 {
 	char	*dest;
 	size_t	i;

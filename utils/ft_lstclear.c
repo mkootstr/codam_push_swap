@@ -6,11 +6,11 @@
 /*   By: mkootstr <mkootstr@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/20 18:28:13 by mkootstr      #+#    #+#                 */
-/*   Updated: 2022/10/10 08:45:29 by mkootstr      ########   odam.nl         */
+/*   Updated: 2022/11/28 17:44:10 by mkootstr      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../src/push_swap.h"
+#include "../includes/functions.h"
 
 void	ft_lstclear(t_stack *lst)
 {

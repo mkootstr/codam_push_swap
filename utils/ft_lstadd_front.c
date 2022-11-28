@@ -6,11 +6,11 @@
 /*   By: mkootstr <mkootstr@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/20 18:28:06 by mkootstr      #+#    #+#                 */
-/*   Updated: 2022/11/15 00:47:08 by mkootstr      ########   odam.nl         */
+/*   Updated: 2022/11/28 17:44:06 by mkootstr      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../src/push_swap.h"
+#include "../includes/functions.h"
 
 void	ft_lstadd_front(t_stack **lst, t_stack *new)
 {

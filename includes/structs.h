@@ -1,32 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_lstadd_back.c                                   :+:    :+:            */
+/*   structs.h                                          :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: mkootstr <mkootstr@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/09/20 18:27:44 by mkootstr      #+#    #+#                 */
-/*   Updated: 2022/11/28 17:44:03 by mkootstr      ########   odam.nl         */
+/*   Created: 2022/10/02 16:38:05 by mkootstr      #+#    #+#                 */
+/*   Updated: 2022/11/28 17:45:18 by mkootstr      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/functions.h"
+#ifndef STRUCTS_H
+# define STRUCTS_H
 
-void	ft_lstadd_back(t_stack **lst, t_stack *new)
+typedef struct s_stack
 {
-	t_stack	*temp;
+	int				num;
+	int				index;
+	struct s_stack	*next;
+	struct s_stack	*prev;
+}				t_stack;
 
-	temp = ft_lstlast(*lst);
-	if (temp && lst && new)
-	{
-		temp->next = new;
-		new->prev = temp;
-		new->next = NULL;
-	}
-	else if (temp == NULL && lst && new)
-	{
-		*lst = new;
-		new->prev = NULL;
-		new->next = NULL;
-	}
-}
+typedef struct s_data
+{
+	struct s_stack	*heada;
+	struct s_stack	*headb;
+	int				sizea;
+}				t_data;
+
+#endif

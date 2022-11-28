@@ -1,32 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_lstdelone.c                                     :+:    :+:            */
+/*   printops3.c                                        :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: mkootstr <mkootstr@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/09/20 18:28:18 by mkootstr      #+#    #+#                 */
-/*   Updated: 2022/10/10 08:45:29 by mkootstr      ########   odam.nl         */
+/*   Created: 2022/11/28 16:42:16 by mkootstr      #+#    #+#                 */
+/*   Updated: 2022/11/28 17:46:04 by mkootstr      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../src/push_swap.h"
+#include "../includes/functions.h"
 
-void	ft_lstdelone(t_stack *lst)
+void	rrr(t_data *data)
 {
-	t_stack	*tempprev;
-	t_stack	*tempnext;
-
-	tempprev = NULL;
-	tempnext = NULL;
-	if (lst)
-	{
-		tempprev = lst->prev;
-		tempnext = lst->next;
-		if (tempnext != NULL)
-			tempnext->prev = tempprev;
-		if (tempprev != NULL)
-			tempprev->next = tempnext;
-		free(lst);
-	}
+	revrot(data->heada, data, 'a');
+	revrot(data->headb, data, 'b');
+	ft_putstr_fd("rrr\n", 1);
 }
