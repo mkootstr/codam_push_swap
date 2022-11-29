@@ -6,12 +6,10 @@
 /*   By: mkootstr <mkootstr@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/15 12:56:37 by mkootstr      #+#    #+#                 */
-/*   Updated: 2022/11/28 17:46:13 by mkootstr      ########   odam.nl         */
+/*   Updated: 2022/11/29 17:57:06 by mkootstr      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include <stdlib.h>
 #include "../includes/functions.h"
 
 int	main(int argc, char *argv[])

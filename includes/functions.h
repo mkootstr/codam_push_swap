@@ -6,7 +6,7 @@
 /*   By: mkootstr <mkootstr@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/15 13:03:26 by mkootstr      #+#    #+#                 */
-/*   Updated: 2022/11/28 17:57:49 by mkootstr      ########   odam.nl         */
+/*   Updated: 2022/11/28 21:38:33 by mkootstr      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define FUNCTIONS_H
 # include <stdlib.h>
 # include <unistd.h>
-# include <stdio.h>
 # include "structs.h"
 
 void	push_swap(char **input);

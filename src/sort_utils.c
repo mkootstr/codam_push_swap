@@ -6,7 +6,7 @@
 /*   By: mkootstr <mkootstr@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/11/28 16:51:34 by mkootstr      #+#    #+#                 */
-/*   Updated: 2022/11/28 17:46:33 by mkootstr      ########   odam.nl         */
+/*   Updated: 2022/11/29 17:43:24 by mkootstr      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	optimize(int size, int pos, t_data *data)
 {
-	if (pos < (size / 2))
+	if (pos <= (size / 2))
 	{
 		while (pos > 0)
 		{

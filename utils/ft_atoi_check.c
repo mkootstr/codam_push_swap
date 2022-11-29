@@ -6,7 +6,7 @@
 /*   By: marlou <marlou@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/29 20:06:38 by marlou        #+#    #+#                 */
-/*   Updated: 2022/11/28 17:43:59 by mkootstr      ########   odam.nl         */
+/*   Updated: 2022/11/29 00:23:53 by mkootstr      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 void	afatal(void)
 {
-	write(2, "ERROR\n", 6);
+	write(2, "Error\n", 6);
 	exit(1);
 }
 

@@ -6,7 +6,7 @@
 #    By: mkootstr <mkootstr@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/11/28 18:15:28 by mkootstr      #+#    #+#                  #
-#    Updated: 2022/11/28 18:37:41 by mkootstr      ########   odam.nl          #
+#    Updated: 2022/11/29 17:53:13 by mkootstr      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,30 +34,36 @@ UTILS_FILES = utils/ft_atoi_check.c\
 			utils/ft_strdup.c\
 			utils/ft_strlen.c
 
+OBJ_FILES = $(SRC_FILES) $(UTILS_FILES)
+
 CFLAGS = -Wall -Wextra -Werror
 
+SRC_DIR = src/
+UTILS_DIR = utils/
 OBJ_DIR = obj/
 
-SRC = $(addprefix $(OBJ_DIR),$(SRC_FILES:.c=.o))
-UTILS = $(addprefix $(OBJ_DIR),$(UTILS_FILES:.c=.o))
+SRC = $(subst $(SRC_DIR),$(OBJ_DIR),$(SRC_FILES:.c=.o))
+UTILS = $(subst $(UTILS_DIR),$(OBJ_DIR),$(UTILS_FILES:.c=.o))
 OBJ = $(SRC) $(UTILS)
 
 all: $(NAME)
 
-$(OBJ_DIR)%.o: $(OBJ)
-	$(CC) $(CFLAGS) -c $< -o $@
+$(OBJ_DIR)%.o: $(SRC_DIR)%.c
+	@mkdir -p $(@D)
+	@$(CC) $(CFLAGS) -c $< -o $@
+$(OBJ_DIR)%.o: $(UTILS_DIR)%.c
+	@mkdir -p $(@D)
+	@$(CC) $(CFLAGS) -c $< -o $@
 
-directories:
-	mkdir -p $(OBJ_DIR)
-
-$(NAME): directories $(OBJ)
-	ar rs $(NAME) $(OBJ)
+$(NAME): $(OBJ)
+	$(CC) $(CFLAGS) -o $(NAME) $(OBJ)
 
 clean:
-	rm -f $(OBJ)
-fclean:
+	rm -rf $(OBJ_DIR)
+
+fclean: clean
 	rm -f $(NAME)
-re:
-	fclean all
+
+re: fclean all
 
 .PHONY: all clean fclean re

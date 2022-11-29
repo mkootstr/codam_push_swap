@@ -6,7 +6,7 @@
 /*   By: mkootstr <mkootstr@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/11/28 16:53:19 by mkootstr      #+#    #+#                 */
-/*   Updated: 2022/11/28 17:46:21 by mkootstr      ########   odam.nl         */
+/*   Updated: 2022/11/29 19:17:10 by mkootstr      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,9 @@ static	int	sort_to_b(t_data *data, int pos, int check)
 void	radix(t_data *data)
 {
 	int	pos;
-	int	sizea;
 	int	check;
 
 	pos = 0;
-	sizea = ft_lstsize(data->heada);
 	check = -1;
 	while (issorted(data) == 0)
 	{
